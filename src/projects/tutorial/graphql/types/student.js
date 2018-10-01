@@ -1,9 +1,8 @@
-import {studentData} from '../data/data';
-import {makeExecutableSchema} from 'graphql-tools';
-import Student from '../mongoose/model';
+import studentData from '../../data/studentData';
+import Student from '../../mongoose/studentModel';
 
-const typeDefs = `
-  type Student {
+export const studentTypeDefs = `
+  type demo_Student {
     id: Int
     name: String
     nickname: String
@@ -12,31 +11,31 @@ const typeDefs = `
   }
 
   type Query {
-    allStudents: [Student]
-    student(id: Int!): Student
+    demo_getAllStudents: [demo_Student]
+    demo_getStudentById(id: Int!): demo_Student
   }
 
   type Mutation {
-    addStudent(id: Int!, name: String!): Student
-    addTutorialStudent: [Student]
+    demo_addStudent(id: Int!, name: String!): demo_Student
+    demo_addDefaultStudents: [demo_Student]
   }
 `;
 
-const resolvers = {
+export const studentResolvers = {
   Query: {
-   allStudents: () => {
+   demo_getAllStudents: () => {
      return Student.find( (error, data) => {
        return data;
      });
    },
-   student: (root, {studentId}) => {
+   demo_getStudentById: (root, {studentId}) => {
      return Student.find( {id: studentId }, (error, data) => {
        return data;
      });
    }
   },
   Mutation: {
-    addStudent: (root, args) => {
+    demo_addStudent: (root, args) => {
       const student = {
         id: args.id,
         name: args.name,
@@ -47,13 +46,9 @@ const resolvers = {
       Student.create(student);
       return student;
     },
-    addTutorialStudent: (root, args) => {
+    demo_addDefaultStudents: (root, args) => {
       Student.insertMany(studentData);
       return studentData;
     }
   }
 }
-
-export const studentSchema = makeExecutableSchema({
-  typeDefs, resolvers
-})

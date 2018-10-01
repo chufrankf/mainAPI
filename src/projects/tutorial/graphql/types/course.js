@@ -1,43 +1,43 @@
-import {coursesData} from '../data/data'
-import {makeExecutableSchema} from 'graphql-tools';
-import Course from '../mongoose/model';
+import coursesData from '../../data/courseData'
+import Course from '../../mongoose/courseModel';
 
-const typeDefs = `
-  type Course {
+export const courseTypeDefs = `
+  type demo_Course {
     id: Int
     title: String
     author: String
     description: String
     topic: String
     url: String
+    students: [demo_Student]
   }
 
-  type Query {
-    allCourses: [Course]
-    course(id: Int!): Course
+  extend type Query {
+    demo_getAllCourses: [demo_Course]
+    demo_getCourseById(id: Int!): demo_Course
   }
 
-  type Mutation {
-    addCourse(id: Int!, title: String!): Course
-    addTutorialCourses: [Course]
+  extend type Mutation {
+    demo_addCourse(id: Int!, title: String!): demo_Course
+    demo_addDefaultCourses: [demo_Course]
   }
 `;
 
-const resolvers = {
+export const courseResolvers = {
   Query: {
-    allCourses: () => {
+    demo_getAllCourses: () => {
       return Course.find((error, data) => {
         return data;
       });
     },
-    course: (root, {courseId}) => {
+    demo_getCourseById: (root, {courseId}) => {
       return Course.find({ id: courseId }, (error, data) => {
         return data;
       });
     }
   },
   Mutation: {
-    addCourse: (root, args) => {
+    demo_addCourse: (root, args) => {
       const course = {
         id: args.id,
         title: args.title,
@@ -49,13 +49,9 @@ const resolvers = {
       Course.create(course);
       return course;
     },
-    addTutorialCourses: (root, args) => {
+    demo_addDefaultCourses: (root, args) => {
       Course.insertMany(coursesData);
       return coursesData
     }
   }
 }
-
-export const courseSchema = makeExecutableSchema({
-  typeDefs, resolvers
-})

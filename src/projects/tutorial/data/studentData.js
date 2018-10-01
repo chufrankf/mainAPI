@@ -1,4 +1,4 @@
-export const studentData = [
+module.export = [
   {
     id: 1,
     name: "Jennifer Qu",
