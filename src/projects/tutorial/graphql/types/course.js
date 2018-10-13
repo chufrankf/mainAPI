@@ -1,7 +1,15 @@
-import coursesData from '../../data/courseData'
 import Course from '../../mongoose/courseModel';
 
 export const courseTypeDefs = `
+  input demo_CourseInput {
+    id: Int
+    title: String
+    author: String
+    description: String
+    topic : String
+    url: String
+  }
+
   type demo_Course {
     id: Int
     title: String
@@ -18,8 +26,8 @@ export const courseTypeDefs = `
   }
 
   extend type Mutation {
-    demo_addCourse(id: Int!, title: String!): demo_Course
-    demo_addDefaultCourses: [demo_Course]
+    demo_addCourse(course: demo_CourseInput!): demo_Course
+    demo_removeAllCourse: Boolean
   }
 `;
 
@@ -37,21 +45,13 @@ export const courseResolvers = {
     }
   },
   Mutation: {
-    demo_addCourse: (root, args) => {
-      const course = {
-        id: args.id,
-        title: args.title,
-        author: args.author,
-        description: args.description,
-        topic: args.topic,
-        url: args.url
-      };
+    demo_addCourse: (root, {course}) => {
       Course.create(course);
       return course;
     },
-    demo_addDefaultCourses: (root, args) => {
-      Course.insertMany(coursesData);
-      return coursesData
+    demo_removeAllCourse: (root, args) => {
+      Course.remove({});
+      return true;
     }
   }
 }

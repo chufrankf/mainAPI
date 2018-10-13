@@ -1,13 +1,21 @@
-import studentData from '../../data/studentData';
 import Student from '../../mongoose/studentModel';
 
 export const studentTypeDefs = `
+  input demo_StudentInput {
+    id: Int
+    name: String
+    nickname: String
+    grade: String
+    address: String
+  }
+
   type demo_Student {
     id: Int
     name: String
     nickname: String
     grade: String
     address: String
+    courses: [demo_Course]
   }
 
   type Query {
@@ -16,8 +24,7 @@ export const studentTypeDefs = `
   }
 
   type Mutation {
-    demo_addStudent(id: Int!, name: String!): demo_Student
-    demo_addDefaultStudents: [demo_Student]
+    demo_addStudent(student: demo_StudentInput!): demo_Student
   }
 `;
 
@@ -35,20 +42,9 @@ export const studentResolvers = {
    }
   },
   Mutation: {
-    demo_addStudent: (root, args) => {
-      const student = {
-        id: args.id,
-        name: args.name,
-        nickname: args.nickname,
-        grade: args.grade,
-        address: args.address
-      }
+    demo_addStudent: (root, {student}) => {
       Student.create(student);
       return student;
-    },
-    demo_addDefaultStudents: (root, args) => {
-      Student.insertMany(studentData);
-      return studentData;
     }
   }
 }

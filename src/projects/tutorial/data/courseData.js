@@ -1,4 +1,4 @@
-module.export = [
+export const courseData = [
   {
       id: 1,
       title: 'The Complete Node.js Developer Course',
