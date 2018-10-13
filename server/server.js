@@ -1,6 +1,6 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import { schema } from './src/graphql-schema';
+import { schema } from './src/schema/graphql-schema';
 import { config } from './config';
 import mongoose from 'mongoose';
 

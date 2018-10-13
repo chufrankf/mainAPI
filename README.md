@@ -21,7 +21,7 @@ Debug
 
 Run
 ------
-// Runs the dev script which will run "babel-watch server.js"
+// Runs the dev script which will run "nodemon --inspect server/server.js --exec babel-node"
 > npm run dev
 
 Stopping

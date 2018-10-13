@@ -2,9 +2,11 @@
   "name": "mainapi",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
-    "dev": "babel-watch server.js",
+    "dev": "nodemon --debug server/server.js --exec babel-node",
+    "build": "babel server -d dist",
+    "serve": "node dist/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -12,7 +14,8 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
-    "babel-watch": "^2.0.7"
+    "babel-register": "^6.26.0",
+    "nodemon": "^1.18.4"
   },
   "dependencies": {
     "apollo-server-express": "^2.0.4",
