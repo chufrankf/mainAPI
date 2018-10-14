@@ -4,8 +4,8 @@ import { studentResolvers, studentTypeDefs } from './types/student';
 
 import { courseData } from '../data/courseData';
 import { studentData } from '../data/studentData';
-import Course from '../mongoose/courseModel';
-import Student from '../mongoose/studentModel';
+import { Course } from '../mongoose/courseModel';
+import { Student } from '../mongoose/studentModel';
 
 const mainTypeDefs = `
   extend type Mutation {

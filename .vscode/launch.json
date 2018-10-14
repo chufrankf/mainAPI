@@ -5,18 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch server nodemon",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "${workspaceRoot}/node_modules/nodemon/bin/nodemon.js",
-      "program": "${workspaceFolder}/server/server.js",
-      "restart": true,
-      "console" :"integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "args": [
-        "--exec", 
-        "babel-node"
-      ]
+        "type": "node",
+        "request": "attach",
+        "name": "Attach by Process ID",
+        "processId": "${command:PickProcess}",
+        "protocol": "inspector"
     }
   ]
 }

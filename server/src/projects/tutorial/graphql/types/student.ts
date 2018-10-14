@@ -1,4 +1,4 @@
-import Student from '../../mongoose/studentModel';
+import { Student } from '../../mongoose/studentModel';
 
 export const studentTypeDefs = `
   input demo_StudentInput {

@@ -22,4 +22,6 @@ var config = {
 }
 
 // Export out the configuration based off the environment
-exports.config = (env) => config[env] || config.dev;
+export var getConfig = function(env) {
+  return config[env] || config.dev;
+}
