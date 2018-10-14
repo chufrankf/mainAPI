@@ -1,4 +1,4 @@
-import {Schema, model} from 'mongoose'
+import { Schema, model } from "mongoose";
 
 const studentSchema = new Schema({
   id: Number,
@@ -6,7 +6,7 @@ const studentSchema = new Schema({
   nickname: String,
   grade: Number,
   address: String,
-  courses: [{ type: Schema.Types.ObjectId, ref: 'Course' }]
+  courses: [{ type: Schema.Types.ObjectId, ref: "Course" }]
 });
 
-export var Student = model('Student', studentSchema);
+export let Student = model("Student", studentSchema);

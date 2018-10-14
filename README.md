@@ -21,8 +21,9 @@ Debug
 
 Run
 ------
-// Runs the dev script which will run "nodemon --inspect server/server.js --exec babel-node"
-> npm run dev
+// Runs the dev script
+> npm run debug
+> Run the vscode debugger. Select the Process that says "node --inspect dist/server.js"
 
 Stopping
 ------

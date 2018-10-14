@@ -1,4 +1,4 @@
-import { Course } from '../../mongoose/courseModel';
+import { Course } from "../../mongoose/courseModel";
 
 export const courseTypeDefs = `
   input demo_CourseInput {
@@ -54,4 +54,4 @@ export const courseResolvers = {
       return true;
     }
   }
-}
+};
