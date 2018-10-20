@@ -14,15 +14,15 @@ Build
 // Installs all packages in package.json
 > npm install
 
-Debug
+Run
 ------
 // Run the mongodb shell
 > mongo --host 127.0.0.1:27017
-
-Run
-------
 // Runs the dev script
 > npm run debug
+
+Debug
+------
 > Run the vscode debugger. Select the Process that says "node --inspect dist/server.js"
 
 Stopping

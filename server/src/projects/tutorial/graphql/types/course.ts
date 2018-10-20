@@ -34,14 +34,10 @@ export const courseTypeDefs = `
 export const courseResolvers = {
   Query: {
     demo_getAllCourses: () => {
-      return Course.find((error, data) => {
-        return data;
-      });
+      return Course.find( {} ).populate("students");
     },
     demo_getCourseById: (root, {courseId}) => {
-      return Course.find({ id: courseId }, (error, data) => {
-        return data;
-      });
+      return Course.find({ id: courseId }).populate("students");
     }
   },
   Mutation: {

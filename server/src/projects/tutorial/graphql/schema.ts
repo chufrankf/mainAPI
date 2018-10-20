@@ -1,6 +1,7 @@
 import { makeExecutableSchema } from "graphql-tools";
 import { courseResolvers, courseTypeDefs } from "./types/course";
 import { studentResolvers, studentTypeDefs } from "./types/student";
+import * as mongoose from "mongoose";
 
 import { courseData } from "../data/courseData";
 import { studentData } from "../data/studentData";
@@ -16,12 +17,38 @@ const mainTypeDefs = `
 const mainResolvers = {
   Mutation: {
     demo_restoreDefaults: (root, args) => {
-      // Empty the course and student collections
+      // Empty the course collections
       return Course.deleteMany({ }, (error) => {
-        return !error ?
-          Student.deleteMany({ }, (error) => {
-            return !error ? true : false;
+        // Empty the student collection
+        return !error ? Student.deleteMany({ }, (error) => {
+          // Add the courses
+          return !error ? Course.insertMany( courseData, (error, insertedCourses) => {
+            // For each student
+            if ( !error ) {
+              studentData.forEach( (student) => {
+                // Generate an _id for the student
+                const studentId = new mongoose.Types.ObjectId();
+                // Get list of course ids
+                const courseList = student.courseIds.map( (value) => insertedCourses.find( (element) => element.id == value )._id);
+                // Save the student
+                Student.create({
+                  _id: studentId,
+                  id: student.id,
+                  name: student.name,
+                  nickname: student.nickname,
+                  grade: student.grade,
+                  address: student.address,
+                  courses: courseList
+                }, (err) => error = err || error);
+                // Update each course to contain the student _id
+                Course.updateMany( { _id : {$in : courseList}}, { $push: { students : studentId }}, (err) => error = err || error );
+              });
+              return !error;
+            } else {
+              return false;
+            }
           }) : false;
+        }) : false;
       });
     }
   }

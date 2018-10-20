@@ -31,14 +31,10 @@ export const studentTypeDefs = `
 export const studentResolvers = {
   Query: {
    demo_getAllStudents: () => {
-     return Student.find( (error, data) => {
-       return data;
-     });
+     return Student.find( {} ).populate("courses");
    },
    demo_getStudentById: (root, {studentId}) => {
-     return Student.find( {id: studentId }, (error, data) => {
-       return data;
-     });
+     return Student.find( {id: studentId }).populate("courses");
    }
   },
   Mutation: {
